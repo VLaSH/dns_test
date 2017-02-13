@@ -5,6 +5,7 @@ class BaseService
     @errors = []
   end
 
+  protected
   def add_error(e)
     if e.is_a?(Array)
       @errors = e

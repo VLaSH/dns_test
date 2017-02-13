@@ -1,3 +1,6 @@
 module DNS
-  module Errors; end
+  module Errors
+    class NoRecordsFoundError < StandardError; end
+    class UndefinedDNSConstantError < StandardError; end
+  end
 end

@@ -10,7 +10,6 @@ class LookupService < BaseService
     reverse = dns_inst.reverse(address).first
     forward = dns_inst.forward(r)
   rescue Resolv::ResolvError => e
-    binding.pry
     add_error(e)
   end
 

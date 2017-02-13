@@ -2,14 +2,16 @@ module DNS
   class Lookup < Base
     def forward(domain)
       addresses = dns_inst.getaddresses(domain)
-      raise Resolv::ResolvError unless addresses.any?
-      addresses.map(&:to_s).sort
+      return addresses.map(&:to_s).sort if addresses.any?
+
+      raise Errors::NoRecordsFoundError
     end
 
     def reverse(address)
       names = dns_inst.getnames(address)
-      raise Resolv::ResolvError unless names.any?
-      names.map(&:to_s).sort
+      return names.map(&:to_s).sort if names.any?
+
+      raise Errors::NoRecordsFoundError
     end
   end
 end
