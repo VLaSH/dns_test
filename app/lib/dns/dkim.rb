@@ -9,7 +9,7 @@ module DNS
       records = dns_inst.getresources(selector, Resolv::DNS::Resource::IN::TXT)
       return records.map(&:strings).flatten if records.any?
 
-      raise Errors::NoRecordsFoundError
+      raise Errors::NoRecordsFoundError, domain
     end
   end
 end

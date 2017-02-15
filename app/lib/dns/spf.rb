@@ -1,30 +1,32 @@
 module DNS
   class SPF < Base
     IP4_REGEX = %r{ip4:([0-9.\/]+)}
+    IP6_REGEX = %r{ip6:(\S*)}
+    SPF_POLICY = 'v=spf1'
 
-    attr_reader :records, :ranges
+    attr_reader :records
 
     def search(domain)
       raise Errors::ParamIsMissingError unless domain.present?
 
       @raw_records = dns_inst.getresources(domain, Resolv::DNS::Resource::IN::TXT)
-      parse_records!
-      return update_ranges! && records if records.any?
+      validate_records && parse_records!
+      return records if records.any?
 
-      raise Errors::NoRecordsFoundError
+      raise Errors::NoRecordsFoundError, domain
     end
 
     private
     attr_reader :raw_records
 
-    def parse_records!
+    def validate_records
       strings = raw_records.map(&:strings).flatten
-      @records = strings.map { |s| s.scan(IP4_REGEX) }.flatten
+      strings.each { |s| s.include?(SPF_POLICY) || (raise Errors::RecordIsInvalidError, self.class.name) }
     end
 
-    def update_ranges!
-      @ranges = []
-      @records.map { |record| @ranges.push(IPAddr.new(record).to_range) }
+    def parse_records!
+      strings = raw_records.map(&:strings).flatten
+      @records = strings.map { |s| s.scan(IP4_REGEX) + s.scan(IP6_REGEX) }.flatten
     end
   end
 end

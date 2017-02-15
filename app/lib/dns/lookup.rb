@@ -6,7 +6,7 @@ module DNS
       addresses = dns_inst.getaddresses(domain)
       return addresses.map(&:to_s).sort if addresses.any?
 
-      raise Errors::NoRecordsFoundError
+      raise Errors::NoRecordsFoundError, domain
     end
 
     def reverse(address)
@@ -15,7 +15,7 @@ module DNS
       names = dns_inst.getnames(address)
       return names.map(&:to_s).sort if names.any?
 
-      raise Errors::NoRecordsFoundError
+      raise Errors::NoRecordsFoundError, address
     end
   end
 end
