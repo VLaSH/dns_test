@@ -16,11 +16,11 @@ class LookupService < BaseService
   def call
     @result = dns_inst.reverse(address)
     forward = result.map { |r| dns_inst.forward(r) }.flatten
-    check_mismatch(forward) && result
+    check_mismatch(forward) && self
   rescue Resolv::ResolvError,
          DNS::Errors::NoRecordsFoundError,
          RecordsMismatchError => e
-    add_error(e.message) && result
+    add_error(e.message) && self
   end
 
   private

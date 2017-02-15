@@ -1,5 +1,5 @@
 class SPFService < BaseService
-  attr_reader :address, :domain, :result
+  attr_reader :address, :domain, :result, :listed
 
   def initialize(address, domain)
     @address = IPAddr.new(address)
@@ -10,17 +10,18 @@ class SPFService < BaseService
   end
 
   def call
-    @result = dns_inst.search(domain)
+    (@result = dns_inst.search(domain)) && self
   rescue Resolv::ResolvError,
          DNS::Errors::NoRecordsFoundError => e
-    add_error(e.message) && result
+    add_error(e.message) && self
   rescue DNS::Errors::RecordIsInvalidError => e
     @valid = false
-    add_error(e.message) && result
+    add_error(e.message) && self
   end
 
   def listed?
-    result.select { |r| IPAddr.new(r).include?(address) }
+    @listed = result.select { |r| IPAddr.new(r).include?(address) }
+    listed.any?
   end
 
   def valid?

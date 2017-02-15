@@ -16,11 +16,11 @@ class DKIMService < BaseService
 
   def call
     @result = dns_inst.search(prefix, domain)
-    fetch_public_key && result
+    fetch_public_key && self
   rescue Resolv::ResolvError,
          DNS::Errors::NoRecordsFoundError,
          PublicKeyNotFoundError => e
-    add_error(e.message) && result
+    add_error(e.message) && self
   end
 
   private

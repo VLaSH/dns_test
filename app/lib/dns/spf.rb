@@ -10,10 +10,11 @@ module DNS
       raise Errors::ParamIsMissingError unless domain.present?
 
       @raw_records = dns_inst.getresources(domain, Resolv::DNS::Resource::IN::TXT)
-      validate_records && parse_records!
-      return records if records.any?
 
-      raise Errors::NoRecordsFoundError, domain
+      raise Errors::NoRecordsFoundError, domain unless @raw_records.any?
+
+      validate_records && parse_records!
+      records
     end
 
     private
