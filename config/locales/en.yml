@@ -47,3 +47,4 @@ en:
     result: Result
     is_valid: Is record valid?
     is_listed: Is IP address listed within SPF record?
+    nothing: Nothing has been found

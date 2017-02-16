@@ -9,6 +9,7 @@ class SpfsController < ApplicationController
   def spf_service
     @spf_service ||= DNS::SPFService.new(*spf_service_params)
   end
+  helper_method :spf_service
 
   def spf_service_params
     params.require(:spf).permit(:address, :domain_name).values

@@ -9,6 +9,7 @@ class DkimsController < ApplicationController
   def dkim_service
     @dkim_service ||= DNS::DKIMService.new(*dkim_service_params)
   end
+  helper_method :dkim_service
 
   def dkim_service_params
     params.require(:dkim).permit(:domain_name, :selector).values

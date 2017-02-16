@@ -1,10 +1,12 @@
-= render 'shared/errors', errors: @lookup_service.errors
+= render 'shared/errors', errors: lookup_service.errors
 
 h3 = t('labels.args')
 = render partial: 'shared/coll', collection: params[:lookup].values
 
-- if @lookup_service.result?
+- if lookup_service.result?
   h3 = t('labels.result')
-  = render partial: 'shared/coll', collection: @lookup_service.result
-
+  = render partial: 'shared/coll', collection: lookup_service.result
+- else
+  h3 = t('labels.nothing')
+  
 = link_to t('links.back'), new_lookup_path

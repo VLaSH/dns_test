@@ -1,19 +1,20 @@
-= render 'shared/errors', errors: @spf_service.errors
+= render 'shared/errors', errors: spf_service.errors
 
 h3 = t('labels.args')
 = render partial: 'shared/coll', collection: params[:spf].values
-
-- if @spf_service.result?
+- if spf_service.result?
   h3 = t('labels.result')
-  = render partial: 'shared/coll', collection: @spf_service.result
+  = render partial: 'shared/coll', collection: spf_service.result
 
   h3 = t('labels.is_valid')
   p
-    = @spf_service.valid?
+    = spf_service.valid?
 
   h3 = t('labels.is_listed')
   p
-    = @spf_service.listed?
-  = render partial: 'shared/coll', collection: @spf_service.listed
+    = spf_service.listed?
+  = render partial: 'shared/coll', collection: spf_service.listed
+- else
+  h3 = t('labels.nothing')
 
 = link_to t('links.back'), new_spf_path
