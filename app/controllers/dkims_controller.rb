@@ -1,13 +1,13 @@
 class DkimsController < ApplicationController
   def show; end
-  
+
   def create
     dkim_service.call
   end
 
   private
   def dkim_service
-    @dkim_service ||= DKIMService.new(*dkim_service_params)
+    @dkim_service ||= DNS::DKIMService.new(*dkim_service_params)
   end
 
   def dkim_service_params

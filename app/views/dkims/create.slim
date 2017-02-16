@@ -1,11 +1,13 @@
 = render 'shared/errors', errors: @dkim_service.errors
+
 h3 = t('labels.args')
 = render partial: 'shared/coll', collection: params[:dkim].values
 
-h3 = t('labels.result')
-= render partial: 'shared/coll', collection: @dkim_service.result
+- if @dkim_service.result?
+  h3 = t('labels.result')
+  = render partial: 'shared/coll', collection: @dkim_service.result
 
-h3 = t('labels.keys')
-= render partial: 'shared/coll', collection: @dkim_service.keys
+  h3 = t('labels.keys')
+  = render partial: 'shared/coll', collection: @dkim_service.keys
 
 = link_to t('links.back'), new_dkim_path

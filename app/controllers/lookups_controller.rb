@@ -7,7 +7,7 @@ class LookupsController < ApplicationController
 
   private
   def lookup_service
-    @lookup_service ||= LookupService.new(*lookup_service_params)
+    @lookup_service ||= DNS::LookupService.new(*lookup_service_params)
   end
 
   def lookup_service_params

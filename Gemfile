@@ -22,7 +22,6 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'faker'
 end

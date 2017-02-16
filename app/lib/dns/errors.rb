@@ -9,7 +9,7 @@ module DNS
       end
 
       def message
-        I18n.t('errors.no_records', record: arg)
+        I18n.t('errors.no_records', subject: arg)
       end
     end
     class RecordIsInvalidError < BaseDNSError

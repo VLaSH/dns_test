@@ -3,16 +3,17 @@
 h3 = t('labels.args')
 = render partial: 'shared/coll', collection: params[:spf].values
 
-h3 = t('labels.result')
-= render partial: 'shared/coll', collection: @spf_service.result
+- if @spf_service.result?
+  h3 = t('labels.result')
+  = render partial: 'shared/coll', collection: @spf_service.result
 
-h3 = t('labels.is_valid')
-p
-  = @spf_service.valid?
+  h3 = t('labels.is_valid')
+  p
+    = @spf_service.valid?
 
-h3 = t('labels.is_listed')
-p
-  = @spf_service.listed?
-= render partial: 'shared/coll', collection: @spf_service.listed
+  h3 = t('labels.is_listed')
+  p
+    = @spf_service.listed?
+  = render partial: 'shared/coll', collection: @spf_service.listed
 
 = link_to t('links.back'), new_spf_path

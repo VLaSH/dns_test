@@ -3,7 +3,8 @@
 h3 = t('labels.args')
 = render partial: 'shared/coll', collection: params[:lookup].values
 
-h3 = t('labels.result')
-= render partial: 'shared/coll', collection: @lookup_service.result
+- if @lookup_service.result?
+  h3 = t('labels.result')
+  = render partial: 'shared/coll', collection: @lookup_service.result
 
 = link_to t('links.back'), new_lookup_path

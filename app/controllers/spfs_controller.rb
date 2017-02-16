@@ -7,7 +7,7 @@ class SpfsController < ApplicationController
 
   private
   def spf_service
-    @spf_service ||= SPFService.new(*spf_service_params)
+    @spf_service ||= DNS::SPFService.new(*spf_service_params)
   end
 
   def spf_service_params

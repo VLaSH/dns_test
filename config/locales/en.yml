@@ -34,8 +34,8 @@ en:
     ip: IP address
     domain: Domain name
   errors:
-    no_records: "Records for #{record} are not found"
-    invalid: "#{record} is invalid"
+    no_records: "Records for %{subject} are not found"
+    invalid: "%{record} is invalid"
     no_key: 'Public key was not found'
     mismatch: Reverse dns lookup result does not match forward lookup result
   labels:
