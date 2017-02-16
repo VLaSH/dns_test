@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe DKIMService do
+RSpec.describe DNS::DKIMService do
   describe '.new' do
-    subject { DKIMService.new(domain, prefix) }
+    subject { DNS::DKIMService.new(domain, prefix) }
 
     context 'return service instance' do
       let(:prefix) { Faker::Lorem.word }
       let(:domain) { Faker::Internet.domain_name }
 
-      it { is_expected.to be_a(DKIMService) }
+      it { is_expected.to be_a(DNS::DKIMService) }
     end
   end
 
   describe '#call' do
-    let(:dkim_service) { DKIMService.new(domain, prefix) }
+    let(:dkim_service) { DNS::DKIMService.new(domain, prefix) }
     let(:address) { Faker::Internet.ip_v4_address }
     let(:prefix) { Faker::Lorem.word }
     let(:domain) { Faker::Internet.domain_name }
@@ -36,19 +36,19 @@ RSpec.describe DKIMService do
       let(:domain) { nil }
       let(:prefix) { nil }
 
-      it { expect(dkim_service.call.errors?).to be_truthy }
+      it { expect(dkim_service.call.errors).to include(I18n.t('errors.missing_param')) }
     end
 
     context 'no records found', stub: 'resolv' do
       let(:records) { [] }
 
-      it { expect(dkim_service.call.errors?).to be_truthy }
+      it { expect(dkim_service.call.errors).to include(I18n.t('errors.no_records', subject: domain)) }
     end
 
     context 'public key not found', stub: 'dns' do
       let(:records) { [Faker::Lorem.word] }
 
-      it { expect(dkim_service.call.errors?).to be_truthy }
+      it { expect(dkim_service.call.errors).to include(I18n.t('errors.no_key')) }
     end
 
     context 'public key found', stub: 'dns' do

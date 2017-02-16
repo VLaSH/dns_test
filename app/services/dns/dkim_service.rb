@@ -2,12 +2,11 @@ module DNS
   class DKIMService < BaseService
     REGEX = %r{p=(\S*)}
 
-    attr_reader :prefix, :domain, :result, :keys
+    attr_reader :prefix, :domain, :keys
 
     def initialize(domain, prefix)
       super()
       @domain, @prefix = domain, prefix
-      @result = []
     end
 
     def call
@@ -26,7 +25,7 @@ module DNS
 
     def fetch_public_key
       @keys = result.map { |r| r.scan(REGEX) }.flatten
-      keys.any? || (raise PublicKeyNotFoundError)
+      keys.any? || (raise ServicesErrors::PublicKeyNotFoundError)
     end
   end
 end

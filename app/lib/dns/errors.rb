@@ -23,7 +23,15 @@ module DNS
         I18n.t('errors.invalid', record: arg)
       end
     end
-    class UndefinedDNSConstantError < BaseDNSError; end
-    class ParamIsMissingError < BaseDNSError; end
+    class UndefinedDNSConstantError < BaseDNSError
+      def message
+        I18n.t('errors.undefined_dns_constant')
+      end
+    end
+    class ParamIsMissingError < BaseDNSError
+      def message
+        I18n.t('errors.missing_param')
+      end
+    end
   end
 end

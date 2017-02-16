@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe LookupService do
+RSpec.describe DNS::LookupService do
   describe '.new' do
-    subject { LookupService.new(address) }
+    subject { DNS::LookupService.new(address) }
 
     context 'return service instance' do
       let(:address) { Faker::Internet.ip_v4_address }
 
-      it { is_expected.to be_a(LookupService) }
+      it { is_expected.to be_a(DNS::LookupService) }
     end
   end
 
   describe '#call' do
-    let(:lookup_service) { LookupService.new(address) }
+    let(:lookup_service) { DNS::LookupService.new(address) }
     let(:address)   { Faker::Internet.ip_v4_address }
     let(:domains)   { [Faker::Internet.domain_name] }
 
@@ -32,19 +32,19 @@ RSpec.describe LookupService do
     context 'param is missing' do
       let(:address) { nil }
 
-      it { expect(lookup_service.call.errors?).to be_truthy }
+      it { expect(lookup_service.call.errors).to include(I18n.t('errors.missing_param')) }
     end
 
     context 'no records found', stub: 'reverse' do
       let(:domains) { [] }
 
-      it { expect(lookup_service.call.errors?).to be_truthy }
+      it { expect(lookup_service.call.errors).to include(I18n.t('errors.no_records', subject: address)) }
     end
 
     context 'records mismatch', stub: 'both' do
       let(:addresses) { [Faker::Internet.ip_v4_address] }
 
-      it { expect(lookup_service.call.errors?).to be_truthy }
+      it { expect(lookup_service.call.errors).to include(I18n.t('errors.mismatch')) }
     end
 
     context 'records match', stub: 'both' do

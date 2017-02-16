@@ -1,11 +1,10 @@
 module DNS
   class LookupService < BaseService
-    attr_reader :dns_inst, :address, :result
+    attr_reader :dns_inst, :address
 
     def initialize(address)
       super()
       @address = address
-      @result = []
     end
 
     def call
@@ -24,7 +23,7 @@ module DNS
     end
 
     def check_mismatch(forward)
-      forward.include?(address) || (raise RecordsMismatchError)
+      forward.include?(address) || (raise ServicesErrors::RecordsMismatchError)
     end
   end
 end

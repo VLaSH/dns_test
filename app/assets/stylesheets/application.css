@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
 ul {
  list-style: none;
 }
@@ -22,4 +23,13 @@ p {
 }
 body {
   word-break: break-word;
+}
+.form-wrapper {
+  display: inline-block;
+}
+.task-title {
+  text-align: center;
+}
+.no-margin {
+ margin: 0;
 }

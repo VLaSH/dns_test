@@ -1,19 +1,27 @@
 require 'rails_helper'
 
-RSpec.describe SPFService do
+RSpec.describe DNS::SPFService do
+  let(:spf_service) { DNS::SPFService.new(address, domain) }
+
   describe '.new' do
-    subject { SPFService.new(address, domain) }
+    subject { DNS::SPFService.new(address, domain) }
+
+    context 'invalid IP address' do
+      let(:address) { Faker::Lorem.word }
+      let(:domain)  { Faker::Internet.domain_name }
+
+      it { expect(spf_service.errors).to include('invalid address') }
+    end
 
     context 'return service instance' do
       let(:address) { Faker::Internet.ip_v4_address }
       let(:domain)  { Faker::Internet.domain_name }
 
-      it { is_expected.to be_a(SPFService) }
+      it { expect(spf_service).to be_a(DNS::SPFService) }
     end
   end
 
   describe '#call' do
-    let(:spf_service) { SPFService.new(address, domain) }
     let(:address) { Faker::Internet.ip_v4_address }
     let(:domain) { Faker::Internet.domain_name }
 
@@ -28,13 +36,13 @@ RSpec.describe SPFService do
     context 'param is missing' do
       let(:domain) { nil }
 
-      it { expect(spf_service.call.errors?).to be_truthy }
+      it { expect(spf_service.call.errors).to include(I18n.t('errors.missing_param')) }
     end
 
     context 'no records found', stub: 'resolv' do
       let(:records) { [] }
 
-      it { expect(spf_service.call.errors?).to be_truthy }
+      it { expect(spf_service.call.errors).to include(I18n.t('errors.no_records', subject: domain)) }
     end
 
     context 'record format is invalid', stub: 'resolv' do

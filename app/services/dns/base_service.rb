@@ -1,9 +1,10 @@
 module DNS
   class BaseService
-    attr_accessor :errors
+    attr_accessor :errors, :result
 
     def initialize
       @errors = []
+      @result = []
     end
 
     def result?

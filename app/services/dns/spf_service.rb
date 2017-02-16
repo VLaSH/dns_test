@@ -1,11 +1,10 @@
 module DNS
   class SPFService < BaseService
-    attr_reader :address, :domain, :result, :listed
+    attr_reader :address, :domain, :listed
 
     def initialize(address, domain)
       super()
       @domain = domain
-      @result = []
       @valid = false
       @address = IPAddr.new(address)
     rescue IPAddr::InvalidAddressError => e

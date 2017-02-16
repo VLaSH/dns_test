@@ -38,6 +38,8 @@ en:
     invalid: "%{record} is invalid"
     no_key: 'Public key was not found'
     mismatch: Reverse dns lookup result does not match forward lookup result
+    undefined_dns_constant: Undefined DNS constant
+    missing_param: Parameter is missing
   labels:
     args: Request arguments
     keys: Public Keys
