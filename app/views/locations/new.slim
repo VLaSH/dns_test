@@ -1,0 +1,8 @@
+.form-wrapper
+  p.task-title.no-margin Location
+  = simple_form_for :location, url: location_path, remote: true do |f|
+    = f.input :address, required: false
+    = f.submit t('buttons.search')
+#map
+.back
+  = link_to t('links.back'), root_path

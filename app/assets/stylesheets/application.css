@@ -33,3 +33,9 @@ body {
 .no-margin {
  margin: 0;
 }
+#map {
+  width: 600px;
+  height: 600px;
+  float: right;
+  margin-right: 100px;
+}

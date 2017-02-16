@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-git_source(:github) do |repo_name|
-end
-
+ruby '2.3.1'
 
 gem 'rails', '~> 5.0.1'
 gem 'pg', '~> 0.18'
@@ -16,6 +14,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'responders'
+gem 'geokit'
 
 
 group :development, :test do

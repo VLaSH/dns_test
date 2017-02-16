@@ -25,6 +25,7 @@ en:
     first: First Task
     second: Second Task
     third: Third Task
+    location: Location
   links:
     back: Back
   buttons:
