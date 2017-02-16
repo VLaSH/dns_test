@@ -28,7 +28,7 @@ RSpec.describe SPFService do
     context 'param is missing' do
       let(:domain) { nil }
 
-      it { expect { spf_service.call }.to raise_error(DNS::Errors::ParamIsMissingError) }
+      it { expect(spf_service.call.errors?).to be_truthy }
     end
 
     context 'no records found', stub: 'resolv' do

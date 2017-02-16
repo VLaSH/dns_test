@@ -1,6 +1,7 @@
 module DNS
   module Errors
-    class NoRecordsFoundError < StandardError
+    class BaseDNSError < StandardError; end
+    class NoRecordsFoundError < BaseDNSError
       attr_reader :arg
 
       def initialize(arg)
@@ -8,10 +9,10 @@ module DNS
       end
 
       def message
-        "Records for #{arg} not found"
+        I18n.t('errors.no_records', record: arg)
       end
     end
-    class RecordIsInvalidError < StandardError
+    class RecordIsInvalidError < BaseDNSError
       attr_reader :arg
 
       def initialize(arg)
@@ -19,10 +20,10 @@ module DNS
       end
 
       def message
-        "#{arg} Record is invalid"
+        I18n.t('errors.invalid', record: arg)
       end
     end
-    class UndefinedDNSConstantError < StandardError; end
-    class ParamIsMissingError < StandardError; end
+    class UndefinedDNSConstantError < BaseDNSError; end
+    class ParamIsMissingError < BaseDNSError; end
   end
 end

@@ -2,7 +2,7 @@ module DNS
   class DKIM < Base
     POLICY = '_domainkey'
 
-    def search(prefix, domain)
+    def search(domain, prefix)
       raise Errors::ParamIsMissingError unless (prefix.present? && domain.present?)
 
       selector = "#{prefix}.#{POLICY}.#{domain}"

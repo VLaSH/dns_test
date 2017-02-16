@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DNS::DKIM do
   describe '#search' do
-    subject { -> { DNS::DKIM.new.search(prefix, domain) } }
+    subject { -> { DNS::DKIM.new.search(domain, prefix) } }
 
     let(:prefix) { Faker::Lorem.word }
     let(:domain) { Faker::Lorem.word }
@@ -44,7 +44,7 @@ RSpec.describe DNS::DKIM do
     end
 
     context 'records present', stub: true do
-      subject { DNS::DKIM.new.search(prefix, domain) }
+      subject { DNS::DKIM.new.search(domain, prefix) }
 
       let(:result_value) { [Faker::Lorem.word] }
       let(:resources) { [double(strings: result_value)] }

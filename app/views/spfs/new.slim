@@ -1,0 +1,5 @@
+= simple_form_for :spf, url: spf_path do |f|
+  = f.input :address, required: false, label: 'IP Address'
+  = f.input :domain_name, required: false
+  = f.submit t('buttons.search')
+= link_to t('links.back'), root_path

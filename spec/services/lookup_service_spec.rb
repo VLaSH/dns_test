@@ -32,13 +32,13 @@ RSpec.describe LookupService do
     context 'param is missing' do
       let(:address) { nil }
 
-      it { expect { lookup_service.call }.to raise_error(DNS::Errors::ParamIsMissingError) }
+      it { expect(lookup_service.call.errors?).to be_truthy }
     end
 
     context 'no records found', stub: 'reverse' do
       let(:domains) { [] }
 
-      it { expect(lookup_service.call.errors.first).to be }
+      it { expect(lookup_service.call.errors?).to be_truthy }
     end
 
     context 'records mismatch', stub: 'both' do

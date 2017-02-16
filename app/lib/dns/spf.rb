@@ -22,7 +22,7 @@ module DNS
 
     def validate_records
       strings = raw_records.map(&:strings).flatten
-      strings.each { |s| s.include?(SPF_POLICY) || (raise Errors::RecordIsInvalidError, self.class.name) }
+      strings.each { |s| s.include?(SPF_POLICY) || (raise Errors::RecordIsInvalidError, s) }
     end
 
     def parse_records!

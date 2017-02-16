@@ -21,3 +21,27 @@
 
 en:
   hello: "Hello world"
+  dashboard:
+    first: First Task
+    second: Second Task
+    third: Third Task
+  links:
+    back: Back
+  buttons:
+    search: Search
+    lookup: Lookup
+  dns:
+    ip: IP address
+    domain: Domain name
+  errors:
+    no_records: "Records for #{record} are not found"
+    invalid: "#{record} is invalid"
+    no_key: 'Public key was not found'
+    mismatch: Reverse dns lookup result does not match forward lookup result
+  labels:
+    args: Request arguments
+    keys: Public Keys
+    records: Records
+    result: Result
+    is_valid: Is record valid?
+    is_listed: Is IP address listed within SPF record?

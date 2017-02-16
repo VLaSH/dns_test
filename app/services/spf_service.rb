@@ -2,20 +2,22 @@ class SPFService < BaseService
   attr_reader :address, :domain, :result, :listed
 
   def initialize(address, domain)
-    @address = IPAddr.new(address)
+    super()
     @domain = domain
     @result = []
-    @valid = true
-    super()
+    @valid = false
+    @address = IPAddr.new(address)
+  rescue IPAddr::InvalidAddressError => e
+    add_error(e.message) && self
   end
 
   def call
-    (@result = dns_inst.search(domain)) && self
-  rescue Resolv::ResolvError,
-         DNS::Errors::NoRecordsFoundError => e
-    add_error(e.message) && self
+    @result = dns_inst.search(domain)
+    @valid = true and self
   rescue DNS::Errors::RecordIsInvalidError => e
-    @valid = false
+    add_error(e.message) && self
+  rescue Resolv::ResolvError,
+         DNS::Errors::BaseDNSError => e
     add_error(e.message) && self
   end
 

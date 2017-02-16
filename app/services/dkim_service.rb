@@ -1,7 +1,7 @@
 class DKIMService < BaseService
   class PublicKeyNotFoundError < StandardError
     def message
-      'Public key was not found'
+      I18n.t('errors.no_key')
     end
   end
 
@@ -9,16 +9,16 @@ class DKIMService < BaseService
 
   attr_reader :prefix, :domain, :result, :keys
 
-  def initialize(prefix, domain)
-    @prefix, @domain = prefix, domain
+  def initialize(domain, prefix)
     super()
+    @domain, @prefix = domain, prefix
   end
 
   def call
-    @result = dns_inst.search(prefix, domain)
+    @result = dns_inst.search(domain, prefix)
     fetch_public_key && self
   rescue Resolv::ResolvError,
-         DNS::Errors::NoRecordsFoundError,
+         DNS::Errors::BaseDNSError,
          PublicKeyNotFoundError => e
     add_error(e.message) && self
   end

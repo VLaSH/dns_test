@@ -1,16 +1,16 @@
 class LookupService < BaseService
   class RecordsMismatchError < StandardError
     def message
-      "Reverse dns lookup result doesn't match forward lookup result"
+      I18n.t('errors.mismatch')
     end
   end
 
   attr_reader :dns_inst, :address, :result
 
   def initialize(address)
+    super()
     @address = address
     @result = []
-    super()
   end
 
   def call
@@ -18,7 +18,7 @@ class LookupService < BaseService
     forward = result.map { |r| dns_inst.forward(r) }.flatten
     check_mismatch(forward) && self
   rescue Resolv::ResolvError,
-         DNS::Errors::NoRecordsFoundError,
+         DNS::Errors::BaseDNSError,
          RecordsMismatchError => e
     add_error(e.message) && self
   end

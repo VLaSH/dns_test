@@ -1,0 +1,5 @@
+= simple_form_for :dkim, url: dkim_path do |f|
+  = f.input :domain_name, required: false
+  = f.input :selector, required: false
+  = f.submit t('buttons.search')
+= link_to t('links.back'), root_path

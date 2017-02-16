@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DKIMService do
   describe '.new' do
-    subject { DKIMService.new(prefix, domain) }
+    subject { DKIMService.new(domain, prefix) }
 
     context 'return service instance' do
       let(:prefix) { Faker::Lorem.word }
@@ -13,7 +13,7 @@ RSpec.describe DKIMService do
   end
 
   describe '#call' do
-    let(:dkim_service) { DKIMService.new(prefix, domain) }
+    let(:dkim_service) { DKIMService.new(domain, prefix) }
     let(:address) { Faker::Internet.ip_v4_address }
     let(:prefix) { Faker::Lorem.word }
     let(:domain) { Faker::Internet.domain_name }
@@ -27,16 +27,16 @@ RSpec.describe DKIMService do
                                               and_return(records)
       when 'dns'
         allow_any_instance_of(DNS::DKIM).to receive(:search).
-                                              with(prefix, domain).
+                                              with(domain, prefix).
                                               and_return(records)
       end
     end
 
     context 'param is missing' do
-      let(:prefix) { nil }
       let(:domain) { nil }
+      let(:prefix) { nil }
 
-      it { expect { dkim_service.call }.to raise_error(DNS::Errors::ParamIsMissingError) }
+      it { expect(dkim_service.call.errors?).to be_truthy }
     end
 
     context 'no records found', stub: 'resolv' do

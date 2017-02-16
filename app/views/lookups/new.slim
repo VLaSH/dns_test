@@ -1,0 +1,4 @@
+= simple_form_for :lookup, url: lookup_path do |f|
+  = f.input :address, required: false, label: 'IP Address'
+  = f.submit t('buttons.lookup')
+= link_to t('links.back'), root_path
